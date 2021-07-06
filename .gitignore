@@ -1,0 +1,6 @@
+# VS Code settings
+.vscode/
+# Build files
+build/
+# Runtime executables
+bin/
