@@ -1,5 +1,5 @@
 {
-  "version": 5,
+  "version": 4,
   "cmakeMinimumRequired": {
     "major": 3,
     "minor": 7,
@@ -13,16 +13,10 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/default",
       "cacheVariables": {
-        "FIRST_CACHE_VARIABLE": {
-          "type": "BOOL",
-          "value": "OFF"
-        },
-        "SECOND_CACHE_VARIABLE": "ON"
+        "CMAKE_BUILD_TYPE": "Debug"
       },
-      "environment": {
-        "MY_ENVIRONMENT_VARIABLE": "Test",
-        "PATH": "$env{HOME}/ninja/bin:$penv{PATH}"
-      },
+      "environment": {},
+      "toolchainFile": "${sourceDir}/extern/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "vendor": {
         "example.com/ExampleIDE/1.0": {
           "autoFormat": true
@@ -52,14 +46,15 @@
     {
       "name": "default",
       "configurePreset": "default"
-    }
+    },
+    { "name": "windows-only", "configurePreset": "windows-only" }
   ],
   "testPresets": [
     {
       "name": "default",
       "configurePreset": "default",
-      "output": {"outputOnFailure": true},
-      "execution": {"noTestsAction": "error", "stopOnFailure": true}
+      "output": { "outputOnFailure": true },
+      "execution": { "noTestsAction": "error", "stopOnFailure": true }
     }
   ],
   "vendor": {
