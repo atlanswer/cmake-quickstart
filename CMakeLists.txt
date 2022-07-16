@@ -20,6 +20,7 @@ project(cmake-quickstart VERSION ${VERSION_STR}
 
 # Find packages here.
 find_package(Git QUIET)
+find_package(fmt REQUIRED)
 
 if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     option(GIT_SUBMODULE "Checkout submodules during build" ON)
@@ -40,7 +41,7 @@ endif()
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
 # Export compile commands.
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
@@ -74,7 +75,7 @@ target_compile_features(libName PUBLIC cxx_std_20)
 # set_property(TARGET libName PROPERTY FOLDER "libName")
 add_executable(cli apps/cli.cpp)
 target_compile_features(cli PUBLIC cxx_std_20)
-target_link_libraries(cli PUBLIC libName)
+target_link_libraries(cli PUBLIC libName fmt::fmt)
 
 # target_sources(${PROJECT_NAME} PUBLIC "${SOURCES}")
 

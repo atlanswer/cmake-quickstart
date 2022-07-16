@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 3,
   "cmakeMinimumRequired": {
     "major": 3,
     "minor": 7,
@@ -15,20 +15,11 @@
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug"
       },
-      "environment": {},
+      "environment": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "true"
+      },
       "toolchainFile": "${sourceDir}/extern/vcpkg/scripts/buildsystems/vcpkg.cmake",
-      "vendor": {
-        "example.com/ExampleIDE/1.0": {
-          "autoFormat": true
-        }
-      }
-    },
-    {
-      "name": "ninja-multi",
-      "inherits": "default",
-      "displayName": "Ninja Multi-Config",
-      "description": "Default build using Ninja Multi-Config generator",
-      "generator": "Ninja Multi-Config"
+      "vendor": {}
     },
     {
       "name": "windows-only",
@@ -39,6 +30,9 @@
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
+      },
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang-cl"
       }
     }
   ],
@@ -58,8 +52,8 @@
     }
   ],
   "vendor": {
-    "example.com/ExampleIDE/1.0": {
-      "autoFormat": false
+    "microsoft.com/VisualStudioSettings/CMake/3.22": {
+      "intelliSenseMode": "windows-clang-x64"
     }
   }
 }
