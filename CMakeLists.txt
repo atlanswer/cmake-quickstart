@@ -19,28 +19,59 @@ project(cmake-quickstart VERSION ${VERSION_STR}
     LANGUAGES CXX)
 
 # Find packages here.
+find_package(Git QUIET)
+
+if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
+    option(GIT_SUBMODULE "Checkout submodules during build" ON)
+
+    if(GIT_SUBMODULE)
+        message(STATUS "Updating submodules")
+        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+            WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+            RESULT_VARIABLE GIT_SUBMODULE_RESULT)
+
+        if(NOT GIT_SUBMODULE_RESULT EQUAL "0")
+            message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMODULE_RESULT}")
+        endif()
+    endif()
+endif()
+
+# Enable IDE folder support.
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+# Export compile commands.
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
+# Default build type if not specified.
 set(default_build_type "Debug")
+
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
     message(STATUS "Setting build type to \"${default_build_type}\" as none was specified.")
     set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
-    STRING "Choose the build type." FORCE)
+        STRING "Choose the build type." FORCE)
     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
-    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+        "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
 else()
     message(STATUS "Build type was specified as CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 endif()
 
-# include(CTest)
-# enable_testing()
+# Testing
+if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+    include(CTest)
+endif()
+
+if(BUILD_TESTING)
+endif()
+
 add_library(libName STATIC src/libName.cpp
     include/libName/version.hpp
     include/libName/libName.hpp)
 target_include_directories(libName PUBLIC include)
 target_compile_features(libName PUBLIC cxx_std_20)
 
+# set_property(TARGET libName PROPERTY FOLDER "libName")
 add_executable(cli apps/cli.cpp)
 target_compile_features(cli PUBLIC cxx_std_20)
 target_link_libraries(cli PUBLIC libName)
@@ -70,10 +101,10 @@ target_link_libraries(cli PUBLIC libName)
 # find_package(Git QUIET)
 
 # if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
-#     execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-#                     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-#                     RESULT_VARIABLE GIT_SUBMOD_RESULT)
-#     if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-#         message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-#     endif()
+# execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
+# WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+# RESULT_VARIABLE GIT_SUBMOD_RESULT)
+# if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+# message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+# endif()
 # endif()
