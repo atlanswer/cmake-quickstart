@@ -4,6 +4,12 @@ This is a CMake template.
 
 ## Usage
 
+### Update submodules
+
+```sh
+git submodule update --init --recursive
+```
+
 ### Configure
 
 ```sh

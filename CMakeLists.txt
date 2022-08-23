@@ -4,6 +4,9 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
 
+# vcpkg toolchain
+set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/extern/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "CMAKE toolchain file")
+
 # Regular expression that matches a define preprocessor.
 set(VERSION_REGEX "#define LIBNAME_VERSION[ \t]+\"(.+)\"")
 
@@ -20,7 +23,8 @@ project(cmake-quickstart VERSION ${VERSION_STR}
 
 # Find packages here.
 find_package(Git QUIET)
-find_package(fmt REQUIRED)
+find_package(fmt CONFIG REQUIRED)
+find_package(doctest CONFIG REQUIRED)
 
 if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
     option(GIT_SUBMODULE "Checkout submodules during build" ON)
@@ -60,7 +64,7 @@ endif()
 
 # Testing
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    include(CTest)
+    # include(CTest)
 endif()
 
 if(BUILD_TESTING)
@@ -70,12 +74,20 @@ add_library(libName STATIC src/libName.cpp
     include/libName/version.hpp
     include/libName/libName.hpp)
 target_include_directories(libName PUBLIC include)
+target_link_libraries(libName PRIVATE doctest::doctest)
 target_compile_features(libName PUBLIC cxx_std_20)
 
 # set_property(TARGET libName PROPERTY FOLDER "libName")
 add_executable(cli apps/cli.cpp)
 target_compile_features(cli PUBLIC cxx_std_20)
-target_link_libraries(cli PUBLIC libName fmt::fmt)
+target_link_libraries(cli PRIVATE libName fmt::fmt-header-only)
+
+add_executable(doctest tests/test.cpp)
+target_compile_features(doctest PUBLIC cxx_std_20)
+target_link_libraries(doctest PRIVATE
+    libName
+    doctest::doctest
+    fmt::fmt-header-only)
 
 # target_sources(${PROJECT_NAME} PUBLIC "${SOURCES}")
 

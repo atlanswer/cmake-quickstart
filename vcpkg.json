@@ -1,8 +1,15 @@
 {
-    "name": "cmake-quickstart",
-    "version-string": "0.0.1",
-    "dependencies": [
-        "doctest",
-        "fmt"
-    ]
+  "name": "cmake-quickstart",
+  "version-string": "0.0.1",
+  "dependencies": [
+    {
+      "name": "doctest",
+      "version>=": "2.4.8"
+    },
+    {
+      "name": "fmt",
+      "version>=": "8.1.1"
+    }
+  ],
+  "builtin-baseline": "68b7fec22eb5fd9c0236b1e42b3c0deb8e771b37"
 }

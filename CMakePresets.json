@@ -18,13 +18,12 @@
       "environment": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "true"
       },
-      "toolchainFile": "${sourceDir}/extern/vcpkg/scripts/buildsystems/vcpkg.cmake",
       "vendor": {}
     },
     {
-      "name": "windows-only",
+      "name": "windows-x64-debug",
       "inherits": "default",
-      "displayName": "Windows-only configuration",
+      "displayName": "Windows x64 debug configuration",
       "description": "This build is only available on Windows",
       "condition": {
         "type": "equals",
@@ -41,7 +40,7 @@
       "name": "default",
       "configurePreset": "default"
     },
-    { "name": "windows-only", "configurePreset": "windows-only" }
+    { "name": "windows-x64-debug", "configurePreset": "windows-x64-debug" }
   ],
   "testPresets": [
     {
