@@ -1,6 +1,6 @@
 {
   "name": "cmake-quickstart",
-  "version-string": "0.0.1",
+  "version-semver": "0.0.2",
   "dependencies": [
     {
       "name": "doctest",
@@ -11,5 +11,5 @@
       "version>=": "8.1.1"
     }
   ],
-  "builtin-baseline": "68b7fec22eb5fd9c0236b1e42b3c0deb8e771b37"
+  "builtin-baseline": "8563627bf17c6b76460a35c0e668557be2f8bbdc"
 }
