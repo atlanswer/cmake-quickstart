@@ -64,10 +64,8 @@ endif()
 
 # Testing
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
-    # include(CTest)
-endif()
-
-if(BUILD_TESTING)
+    include(CTest)
+    include(doctest)
 endif()
 
 add_library(libName STATIC src/libName.cpp
@@ -82,12 +80,17 @@ add_executable(cli apps/cli.cpp)
 target_compile_features(cli PUBLIC cxx_std_20)
 target_link_libraries(cli PRIVATE libName fmt::fmt-header-only)
 
-add_executable(doctest tests/test.cpp)
-target_compile_features(doctest PUBLIC cxx_std_20)
-target_link_libraries(doctest PRIVATE
-    libName
-    doctest::doctest
-    fmt::fmt-header-only)
+if(BUILD_TESTING)
+    add_executable(doctest tests/test.cpp)
+    target_compile_features(doctest PUBLIC cxx_std_20)
+    target_link_libraries(doctest PRIVATE
+        libName
+        doctest::doctest
+        fmt::fmt-header-only)
+    doctest_discover_tests(doctest)
+    # add_test(NAME test COMMAND $<TARGET_FILE:doctest>)
+endif()
+
 
 # target_sources(${PROJECT_NAME} PUBLIC "${SOURCES}")
 
