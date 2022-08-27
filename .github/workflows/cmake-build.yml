@@ -40,7 +40,7 @@ jobs:
           ${{ matrix.triplet }}-${{ hashFiles('vcpkg.json') }}-${{ hashFiles('.git/modules/vcpkg/HEAD') }}
 
     - name: Prepare MSVC on Windows 🪟
-      uses: ilammy/msvc-dev-cmd@latest
+      uses: ilammy/msvc-dev-cmd@v1
 
     - name: Configure ⚙️
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
