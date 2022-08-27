@@ -2,34 +2,32 @@
   "version": 3,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 7,
+    "minor": 21,
     "patch": 0
   },
   "configurePresets": [
     {
-      "name": "default",
-      "displayName": "Default Config",
-      "description": "Default build using Ninja generator",
-      "generator": "Ninja",
-      "binaryDir": "${sourceDir}/build/default",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Debug"
-      },
+      "name": "ninja-multi-config",
+      "displayName": "Config: Base Ninja Multi-Config",
+      "description": "Default config using the Ninja Multi-Config generator",
+      "generator": "Ninja Multi-Config",
+      "binaryDir": "${sourceDir}/build/${presetName}",
       "environment": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "true"
       },
-      "vendor": {}
+      "toolchainFile": "${sourceDir}/extern/vcpkg/scripts/buildsystems/vcpkg.cmake"
     },
     {
-      "name": "windows-x64-debug",
-      "inherits": "default",
-      "displayName": "Windows x64 debug configuration",
-      "description": "This build is only available on Windows",
+      "name": "windows-x64-config",
+      "inherits": "ninja-multi-config",
+      "displayName": "Config: Windows x64 with Ninja Multi-Config",
+      "description": "Windows x64 with Ninja Multi-Config (clang-cl)",
+      "binaryDir": "${sourceDir}/build/windows-x64-config",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
         "rhs": "Windows"
-      },
+      }, 
       "cacheVariables": {
         "CMAKE_CXX_COMPILER": "clang-cl"
       }
@@ -37,17 +35,44 @@
   ],
   "buildPresets": [
     {
-      "name": "default",
-      "configurePreset": "default"
+      "name": "ninja-debug-build",
+      "configurePreset": "ninja-multi-config",
+      "displayName": "Build: Base Ninja Multi-Config",
+      "description": "Default build with Ninja Multi-Config generator",
+      "configuration": "Debug"
     },
-    { "name": "windows-x64-debug", "configurePreset": "windows-x64-debug" }
+    {
+      "name": "windows-x64-debug-build",
+      "configurePreset": "windows-x64-config",
+      "displayName": "Build: Windows x64 Debug with Ninja Multi-Config",
+      "description": "Windows x64 debug build with Ninja Multi-Config (clang-cl)",
+      "configuration": "Debug"
+    },
+    {
+      "name": "windows-x64-release-build",
+      "inherits": "windows-x64-debug-build",
+      "displayName": "Build: Windows x64 Release with Ninja Multi-Config",
+      "description": "Windows x64 release build with Ninja Multi-Config (clang-cl)",
+      "configuration": "Release"
+    }
   ],
   "testPresets": [
     {
-      "name": "default",
-      "configurePreset": "default",
+      "name": "default-test",
+      "configurePreset": "ninja-multi-config",
       "output": { "outputOnFailure": true },
-      "execution": { "noTestsAction": "error", "stopOnFailure": true }
+      "execution": { "noTestsAction": "error", "stopOnFailure": true },
+      "configuration": "Debug"
+    },
+    {
+      "name": "windows-x64-debug-test",
+      "configurePreset": "windows-x64-config",
+      "configuration": "Debug"
+    },
+    {
+      "name": "windows-x64-release-test",
+      "inherits": "windows-x64-debug-test",
+      "configuration": "Release"
     }
   ],
   "vendor": {

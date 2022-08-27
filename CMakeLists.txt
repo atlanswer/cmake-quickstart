@@ -52,14 +52,16 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 # Default build type if not specified.
 set(default_build_type "Debug")
 
-if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+if(CMAKE_CONFIGURATION_TYPES)
+    message(STATUS "Multi-config enabled, CMAKE_CONFIGURATION_TYPES=${CMAKE_CONFIGURATION_TYPES}")
+elseif(CMAKE_BUILD_TYPE)
+    message(STATUS "Build type was specified as CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
+else()
     message(STATUS "Setting build type to \"${default_build_type}\" as none was specified.")
     set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
         STRING "Choose the build type." FORCE)
     set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
         "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
-else()
-    message(STATUS "Build type was specified as CMAKE_BUILD_TYPE=${CMAKE_BUILD_TYPE}")
 endif()
 
 # Testing
@@ -88,9 +90,9 @@ if(BUILD_TESTING)
         doctest::doctest
         fmt::fmt-header-only)
     doctest_discover_tests(doctest)
+
     # add_test(NAME test COMMAND $<TARGET_FILE:doctest>)
 endif()
-
 
 # target_sources(${PROJECT_NAME} PUBLIC "${SOURCES}")
 
