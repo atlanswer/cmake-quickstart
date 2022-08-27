@@ -13,7 +13,7 @@ git submodule update --init --recursive
 ### Configure
 
 ```sh
-~/package $ cmake -S . -B build --preset <preset>
+~/package $ cmake --preset <preset>
 ```
 
 ### Build

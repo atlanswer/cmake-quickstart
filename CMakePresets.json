@@ -22,7 +22,6 @@
       "inherits": "ninja-multi-config",
       "displayName": "Config: Windows x64 with Ninja Multi-Config",
       "description": "Windows x64 with Ninja Multi-Config (clang-cl)",
-      "binaryDir": "${sourceDir}/build/windows-x64-config",
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
