@@ -30,9 +30,6 @@ jobs:
     
     - name: Setup tmate session
       uses: mxschmitt/action-tmate@v3
-      with:
-        sudo: false
-        install-dependencies: false
 
     - name: Prepare CMake & Ninja 🛒
       uses: lukka/get-cmake@latest
