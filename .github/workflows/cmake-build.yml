@@ -28,9 +28,6 @@ jobs:
       with:
         submodules: recursive
     
-    - name: Setup tmate session
-      uses: mxschmitt/action-tmate@v3
-
     - name: Prepare CMake & Ninja 🛒
       uses: lukka/get-cmake@latest
     
@@ -44,6 +41,9 @@ jobs:
 
     - name: Prepare MSVC on Windows 🪟
       uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Setup tmate session
+      uses: mxschmitt/action-tmate@v3
 
     - name: Configure ⚙️
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
