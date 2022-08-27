@@ -13,13 +13,19 @@ git submodule update --init --recursive
 ### Configure
 
 ```sh
-~/package $ cmake -G Ninja -S . -B build
+~/package $ cmake -S . -B build --preset <preset>
 ```
 
 ### Build
 
 ```sh
-~/package $ cmake --build build
+~/package $ cmake --build --preset <preset>
+```
+
+### Test
+
+```sh
+~/package $ ctest --preset <preset>
 ```
 
 ### Install
