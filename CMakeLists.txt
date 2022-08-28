@@ -4,9 +4,6 @@ if(${CMAKE_VERSION} VERSION_LESS 3.12)
     cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
 endif()
 
-# vcpkg toolchain
-set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/extern/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "CMAKE toolchain file")
-
 # Regular expression that matches a define preprocessor.
 set(VERSION_REGEX "#define LIBNAME_VERSION[ \t]+\"(.+)\"")
 
