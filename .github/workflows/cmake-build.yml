@@ -37,26 +37,13 @@ jobs:
       shell: bash
 
     - name: Restore vcpkg 🧳
-      uses: actions/cache@v3
+      uses: lukka/run-vcpkg@v10
       with:
-        path: |
-          ${{ github.workspace }}/extern/vcpkg/archives
-        key: |
-          ${{ matrix.triplet }}-${{ hashFiles('vcpkg.json') }}-${{ hashFiles('.git/modules/vcpkg/HEAD') }}    
+        vcpkgDirectory: ${{ github.workspace }}/extern/vcpkg
 
-    - name: Prepare MSVC on Windows 🪟
-      uses: ilammy/msvc-dev-cmd@v1
-
-    - name: Configure ⚙️
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      run: cmake --preset ninja-multi-config
-
-    - name: Build ⚒️
-      # Build your program with the given configuration
-      run: cmake --build --preset ninja-debug-build
-
-    - name: Test 🧪
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest --preset default-test
+    - name: Configure, build & test ⚙️⚒️🧪
+      uses: lukka/run-cmake@v10
+      with:
+        configurePreset: 'ninja-multi-config'
+        buildPreset: 'ninja-debug-build'
+        testPreset: 'default-test'
