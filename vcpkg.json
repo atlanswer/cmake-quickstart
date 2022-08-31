@@ -1,15 +1,15 @@
 {
   "name": "cmake-quickstart",
-  "version-semver": "0.0.2",
+  "version-semver": "0.0.3",
   "dependencies": [
     {
       "name": "doctest",
-      "version>=": "2.4.8"
+      "version>=": "2.4.9"
     },
     {
       "name": "fmt",
-      "version>=": "8.1.1"
+      "version>=": "9.0.0"
     }
   ],
-  "builtin-baseline": "8563627bf17c6b76460a35c0e668557be2f8bbdc"
+  "builtin-baseline": "e2a71489b17ae1f5fd29d5fc74c2cdb03fd83f9e"
 }
